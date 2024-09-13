@@ -249,7 +249,7 @@ int escribe_doble(int *num, char letra)
 typedef void (*p_cuadrado)(int *);
 typedef int (*p_triple_duplica)(int *);
 typedef char *(*p_convierte)(int *, char **);
-typedef int (*p_duplica)(int *);
+typedef int (*p_escribe_doble)(int *);
 /* ------------------- FIN DE RESPUESTA   ------------------ */
 
 /* Fin ejercicio 03 */
@@ -395,7 +395,22 @@ El objetivo es:
 void *foo(void *args)
 {
   /* ------------------- RESPUESTA   ------------------ */
-  
+  void **MyData = (void **)args;
+  // obtenemos los apuntadores a las funciones
+  p_triple_duplica duplicaFunc = (p_triple_duplica)MyData[DOUBLE_OP];
+  p_triple_duplica triplicaFunc = (p_triple_duplica)MyData[TRIPLE_OP];
+
+  // obtener los arreglos de datos y resultados
+  int *data = (int *)MyData[DATA];
+  int *double_res = (int *)MyData[DOUBLE_RES];
+  int *triple_res = (int *)MyData[TRIPLE_RES];
+
+  // recorremos los arreglos de datos y aplicamos las funciones
+  for (int i = 0; i < MAXELEM; i++, data++, double_res++, triple_res++)
+  {
+    *double_res = duplicaFunc(data);
+    *triple_res = triplicaFunc(data);
+  }
   /* ------------------- RESPUESTA   ------------------ */
   /* Aqui va la solucion del Ejercicio 06 */
 
