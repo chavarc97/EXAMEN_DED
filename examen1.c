@@ -335,8 +335,17 @@ int mult_condicional(void *estructura, int numero)
 
 int examen05()
 {
-  MiEstructura estructura = {5, 'd'};
+  MiEstructura estructura;
+  MiEstructura *p_estructura = &estructura;
+  *p_estructura = (MiEstructura){10, 'd'};
   int numero = 10;
+  printf("Mi estructura tiene el numero %d y la letra %c\n", p_estructura->numero, p_estructura->letra);
+  printf("Resultado: %d\n", mult_condicional(&estructura, numero));
+
+  *p_estructura = (MiEstructura){40, 'a'};
+  numero = 10;
+  printf("-----------------------------\n");
+  printf("Mi estructura tiene el numero %d y la letra %c\n", p_estructura->numero, p_estructura->letra);
   printf("Resultado: %d\n", mult_condicional(&estructura, numero));
   return 0;
 }
@@ -386,9 +395,10 @@ El objetivo es:
 void *foo(void *args)
 {
   /* ------------------- RESPUESTA   ------------------ */
-
+  
   /* ------------------- RESPUESTA   ------------------ */
   /* Aqui va la solucion del Ejercicio 06 */
+
   return NULL;
 }
 
