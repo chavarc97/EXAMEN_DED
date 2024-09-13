@@ -70,14 +70,14 @@ Pruebe que su programa funcione con los ejemplos programados
 /*------------------- INICIO RESPUESTA   ------------------ */
 char *desencriptar(char *palabra)
 {
-  /* 
+  /*
     Para recorrer la cadena de texto, utilizamos un apuntador que se incrementa en cada iteración.
     Comprobamos si la posición de la letra es par o non y aplicamos la lógica de desencriptación
     correspondiente. al igual para checar la longitud de la cadena nos fijamos que el ultimo caracter
     sea el caracter nulo '\0'.
    */
   char *p = palabra;
-  
+
   for (int i = 0; *p != '\0'; i++, p++)
   {
     if (i % 2 == 0)
@@ -133,7 +133,7 @@ int examen01()
 // Para la función.
 void convertir_temp(float *temperatura, char *tipo)
 {
-  /* 
+  /*
     Le estamos pasando la dirección de memoria de la variable temperatura y tipo
     para que la función pueda modificar directamente el valor de estas variables.
    */
@@ -150,13 +150,13 @@ void convertir_temp(float *temperatura, char *tipo)
 }
 void convert_multiple_temps(float *temps, char *tipos, int num_temps)
 {
-  /* 
+  /*
   recorremos el arreglo de temperaturas y tipos que nos pasan como argumento
   y llamamos a la función convertir_temp para cada temperatura.
    */
   float *p_temps = temps;
   char *p_tipos = tipos;
-  for(int i = 0; i < num_temps; i++, p_temps++, p_tipos++)
+  for (int i = 0; i < num_temps; i++, p_temps++, p_tipos++)
   {
     convertir_temp(p_temps, p_tipos);
   }
@@ -202,8 +202,7 @@ int examen02()
   float temps[4] = {45, 110, 0, 0};
   int num_temps = 4;
 
-  convert_multiple_temps(temps, tipos, num_temps);  //DESCOMENTA Y TERMINA ....
-  
+  convert_multiple_temps(temps, tipos, num_temps); // DESCOMENTA Y TERMINA ....
 
   for (int i = 0; i < num_temps; i++)
   {
@@ -275,6 +274,21 @@ void examen04()
   /* ------------------- INICIA RESPUESTA   ------------------ */
   int *p_arreglo = arreglo;
   char *p_letras = las_letras;
+
+  *p_arreglo = 30;
+  *p_letras = 'z';
+  p_arreglo++; // incrementamos los apuntadores
+  p_letras++;  // incrementamos los apuntadores
+  *p_arreglo = 50;
+  *p_letras = 'x';
+  p_arreglo++; // incrementamos los apuntadores
+  p_letras++;  // incrementamos los apuntadores
+  *p_arreglo = 99;
+  *p_letras = 'y';
+
+  // reseteamos los apuntadores
+  p_arreglo = arreglo;
+  p_letras = las_letras;
   /* ------------------- FIN RESPUESTA   ------------------ */
 
   for (int i = 0; i < 3; i++)
@@ -300,10 +314,30 @@ void examen04()
 */
 /* ------------------- RESPUESTA   ------------------ */
 // Declara tu función aquí
+typedef struct
+{
+  int numero;
+  char letra;
+} MiEstructura;
+
+int mult_condicional(void *estructura, int numero)
+{
+  MiEstructura *p_estructura = (MiEstructura *)estructura;
+  if (p_estructura->letra == 'a' || p_estructura->letra == 'b' || p_estructura->letra == 'c')
+  {
+    return 0;
+  }
+  else
+  {
+    return p_estructura->numero * numero;
+  }
+}
 
 int examen05()
 {
-
+  MiEstructura estructura = {5, 'd'};
+  int numero = 10;
+  printf("Resultado: %d\n", mult_condicional(&estructura, numero));
   return 0;
 }
 /* ------------------- RESPUESTA   ------------------ */
