@@ -151,7 +151,7 @@ void convertir_temp(float *temperatura, char *tipo)
 void convert_multiple_temps(float *temps, char *tipos, int num_temps)
 {
   /* 
-  recorrecmos el arreglo de temperaturas y tipos que nos pasan como argumento
+  recorremos el arreglo de temperaturas y tipos que nos pasan como argumento
   y llamamos a la función convertir_temp para cada temperatura.
    */
   float *p_temps = temps;
@@ -247,7 +247,10 @@ int escribe_doble(int *num, char letra)
 
 /* Declara tus punteros a funcion aqui: */
 /* ------------------- INICIO RESPUESTA   ------------------ */
-
+typedef void (*p_cuadrado)(int *);
+typedef int (*p_triple_duplica)(int *);
+typedef char *(*p_convierte)(int *, char **);
+typedef int (*p_duplica)(int *);
 /* ------------------- FIN DE RESPUESTA   ------------------ */
 
 /* Fin ejercicio 03 */
@@ -270,7 +273,8 @@ void examen04()
   char las_letras[3] = {/*No vale inicializar aqui */};
 
   /* ------------------- INICIA RESPUESTA   ------------------ */
-
+  int *p_arreglo = arreglo;
+  char *p_letras = las_letras;
   /* ------------------- FIN RESPUESTA   ------------------ */
 
   for (int i = 0; i < 3; i++)
