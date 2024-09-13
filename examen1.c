@@ -1,10 +1,10 @@
-/*  
+/*
 
 
 Alumno: SALVADOR RODRIGUEZ CEBALLOS
     Fecha : 13 de Septiembre 2024
     Diseño de Estructura de Datos - Grupo B
-    Primer Parcial "Apuntadores" 
+    Primer Parcial "Apuntadores"
 
   Teoria                               15 pts
   Ejercicio 1:  Palabra secreta        10 pts
@@ -12,11 +12,10 @@ Alumno: SALVADOR RODRIGUEZ CEBALLOS
   Ejercicio 3:  Punteros a funcion     10 pts
   Ejercicio 4:  Array + pointers       10 pts
   Ejercicio 5:  Structs                20 pts
-  Ejercicio 6:  Array pointers         20 pts                    
+  Ejercicio 6:  Array pointers         20 pts
                                       _______
                                         110
 */
-
 
 /* =============================================================
     ====================   Teoria 15 pts =======================
@@ -25,10 +24,10 @@ Alumno: SALVADOR RODRIGUEZ CEBALLOS
   1: Describe qué es un apuntador y cuál es su tamaño (no importa tanto el número bytes, sino la teoria detras del tamaño)
     R: Es una variable que almacena la dirección de memoria de otra variable, esta puede tener diferente tamaño
        según la arquitectura de la computador puede ser de 4 o 8 bytes.
-      
+
   2: Cuando se declara un apuntador, por qué es necesario declarar también el tipo de dato al que apunta?
-    R: cuando se declara un apuntador, es necesario especificar el tipo de dato al que apunta porque esto 
-    determina cómo se interpretará la memoria a la que accede el apuntador y cómo se realizan las operaciones 
+    R: cuando se declara un apuntador, es necesario especificar el tipo de dato al que apunta porque esto
+    determina cómo se interpretará la memoria a la que accede el apuntador y cómo se realizan las operaciones
     sobre esa memoria. Aquí te explico algunas razones clave:
 
 
@@ -50,9 +49,8 @@ Alumno: SALVADOR RODRIGUEZ CEBALLOS
 #include <stdio.h>
 #include <stdlib.h>
 
-
-/* ################      EJERCICIO 01 :    ################################ 
-################            10 pts         ################################ 
+/* ################      EJERCICIO 01 :    ################################
+################            10 pts         ################################
 Implemente una funcion que pueda desencriptar "palabras secretas".
 Al recibir una palabra:
   * Si la letra es non, cámbiala por la letra que sigue en el abecedario.
@@ -65,41 +63,53 @@ Ejemplo
               * "n" es la letra número 3 de mi palabra. Non. Entonces la cambio por una "o".
 
 Cambie la palabra directamente en la variable original.
-Utilize exclusivamente aritmetica de apuntadores para recorrer la cadena 
+Utilize exclusivamente aritmetica de apuntadores para recorrer la cadena
 de texto, no esta permitido utilizar corchetes [] ni la funcion strlen.
 Pruebe que su programa funcione con los ejemplos programados
 */
 /*------------------- INICIO RESPUESTA   ------------------ */
-char * desencriptar(char *palabra)
+char *desencriptar(char *palabra)
 {
-  int str_len = sizeof(palabra);
+  char *p = palabra;
+  
+  for (int i = 0; *p != '\0'; i++, p++)
+  {
+    if (i % 2 == 0)
+    {
+      *p = *p + 1;
+    }
+    else
+    {
+      *p = *p - 2;
+    }
+  }
 
   return palabra;
 }
-   
 
 /* ------------------- FIN DE RESPUESTA   ------------------ */
 
 int examen01()
 {
   char secreto[10] = "Ewmehqmc";
-  printf("Palabra secreta: %s\n",secreto);
+  char secreto2[4] = "tpn";
+  printf("Palabra secreta: %s\n", secreto);
   // INICIO RESPUESTA
-    //Llama tu funcion aqui, pruebala con la variable secreto.
-    //Prueba con mas cadenas para garantizar su funcionamiento.
-  
+  // Llama tu funcion aqui, pruebala con la variable secreto.
+  // Prueba con mas cadenas para garantizar su funcionamiento.
+  desencriptar(secreto);
+
   // FIN DE RESPUESTA
-  
+
   printf("%s", secreto);
   printf("\n");
- 
+
   return 0;
 }
 
-
-/* ################      EJERCICIO 02 :    ################################ 
-   ################         15 pts         ################################ 
-  Implementa una funcion ConvertirTemp que reciba un float 'temperatura' y un 
+/* ################      EJERCICIO 02 :    ################################
+   ################         15 pts         ################################
+  Implementa una funcion ConvertirTemp que reciba un float 'temperatura' y un
   char 'tipo'. La funcion deberá convertir °C a °F y viceversa.
   La funcion debe de afectar directamente ambas variables directamente, es decir no
   retorna nada.
@@ -114,90 +124,99 @@ int examen01()
 */
 
 /* ------------------- INICIO RESPUESTA   ------------------ */
-//Para la función.
-
+// Para la función.
+void covertir_temp(float *temperatura, char *tipo)
+{
+  if (*tipo == 'C')
+  {
+    *temperatura = (*temperatura * 9 / 5) + 32;
+    *tipo = 'F';
+  }
+  else
+  {
+    *temperatura = (*temperatura - 32) * 5 / 9;
+    *tipo = 'C';
+  }
+}
 /* ------------------- FIN DE RESPUESTA   ------------------ */
-
 
 int examen02()
 {
-  char tipo = 'F';      //F = Fahrenheit y C = Celcius
-  float  grados = 35;
+  char tipo = 'F'; // F = Fahrenheit y C = Celcius
+  float grados = 35;
 
   printf("Temperatura actual es de: %.2f °%c\n", grados, tipo);
 
   /* ------------------- INICIO RESPUESTA   ------------------ */
-  //covertir_temp(?,?);
+  covertir_temp(&grados, &tipo);
   /* ------------------- FIN DE RESPUESTA   ------------------ */
-  
+
   printf("Que equivale a: %.2f °%c\n", grados, tipo);
-  
+
   /* Ahora al revés*/
   tipo = 'C';
   grados = 21;
   printf("Temperatura actual es de: %.2f °%c\n", grados, tipo);
 
   /* ------------------- INICIO RESPUESTA   ------------------ */
-  //covertir_temp(?,?);
+  // covertir_temp(?,?);
   /* ------------------- FIN DE RESPUESTA   ------------------ */
 
   printf("Que equivale a: %.2f °%c\n", grados, tipo);
 
-  /*El programa debera imprimir: 
+  /*El programa debera imprimir:
     Temperatura actual es de: 35 °F
     Que equivale a: 1.67 °C
     Temperatura actual es de: 21 °C
-    Mi dinero convertido es: 69.8 °F  
+    Mi dinero convertido es: 69.8 °F
  */
 
+  /* Por 10 puntos extras: Crea una función llamada covertir_multiple_temps
+  que pueda recibir un arreglo de temperaturas y haga funcionar el siguiente
+  codigo :  (NOTA, no usar [] en la función) */
+  char tipos[4] = {'C', 'F', 'C', 'F'};
+  float temps[4] = {45, 110, 0, 0};
+  int num_temps = 4;
 
- /* Por 10 puntos extras: Crea una función llamada covertir_multiple_temps
- que pueda recibir un arreglo de temperaturas y haga funcionar el siguiente
- codigo :  (NOTA, no usar [] en la función) */
- char tipos[4] = {'C','F','C','F'};
- float temps[4] = {45, 110, 0, 0};
- int num_temps = 4;
+  // convert_multiple_temps();  DESCOMENTA Y TERMINA ....
 
- //convert_multiple_temps();  DESCOMENTA Y TERMINA .... 
-  
- for (int i = 0; i < num_temps; i++)
- {
-   printf("La temperatura %d convertida es: %.2f%c\n", i, temps[i], tipos[i]);
- }
-  
+  for (int i = 0; i < num_temps; i++)
+  {
+    printf("La temperatura %d convertida es: %.2f%c\n", i, temps[i], tipos[i]);
+  }
+
   return 0;
 }
 
-
-/* ################      EJERCICIO 03 :    ################################ 
-################            10 pts         ################################ 
+/* ################      EJERCICIO 03 :    ################################
+################            10 pts         ################################
 Declara el numero de apuntadores a funcion necesarios para poder
-llamar las siguientes 5 funciones. Utiliza el Typedef para crear un nuevo 
+llamar las siguientes 5 funciones. Utiliza el Typedef para crear un nuevo
 tipo de dato apuntador para cada uno de los punteros a funcion que necesites */
-void cuadrado(int *num)   
+void cuadrado(int *num)
 {
   *num = *num * *num;
 }
 
-int triplica (int *num)
+int triplica(int *num)
 {
   *num = (*num + *num + *num);
-  return;
+  return *num;
 }
 
-char * convierte(int *ascii, char ** modificador)
+char *convierte(int *ascii, char **modificador)
 {
-  return (char*) ascii;
+  return (char *)ascii;
 }
 
-int duplica (int *num)
+int duplica(int *num)
 {
   return (*num + *num);
 }
 
 int escribe_doble(int *num, char letra)
 {
-  printf("%c%c",letra,letra);
+  printf("%c%c", letra, letra);
   return (100);
 }
 
@@ -208,18 +227,17 @@ int escribe_doble(int *num, char letra)
 
 /* Fin ejercicio 03 */
 
-
-/* ################      EJERCICIO 04 :    ################################ 
-   ################         10 pts         ################################ 
+/* ################      EJERCICIO 04 :    ################################
+   ################         10 pts         ################################
 Asigne a los siguientes 2 arrelgos los valores "30, 50, 99" y 'z', 'x' y 'y'
-respectivamente pero sin utilizar corchetes. 
+respectivamente pero sin utilizar corchetes.
 Solo apuntadores y aritmetica de apuntadores.
 
   Salida esperada:
-  
-    30 - z 
-    50 - x 
-    99 - y 
+
+    30 - z
+    50 - x
+    99 - y
  */
 void examen04()
 {
@@ -229,25 +247,23 @@ void examen04()
   /* ------------------- INICIA RESPUESTA   ------------------ */
 
   /* ------------------- FIN RESPUESTA   ------------------ */
-  
-  for(int i = 0; i < 3; i++)
+
+  for (int i = 0; i < 3; i++)
   {
     printf("%d - %c \n", arreglo[i], las_letras[i]);
   }
 }
 
-
-
 /* ################      EJERCICIO 05 :    ################################
-   ################         20 pts         ################################   
+   ################         20 pts         ################################
   Implementa la funciona mult_condicional:
   recibe   : un void * a una estructura, que contiene un numero y una letra.
   recibe   : otro numero
-  
+
   devuelve : 0. Si la letra es a, b, o c:
   devuelve : la multiplicación de los 2 numeros (la de la estructura y la adicional) si la letra es cualquier otra cosa
-             
-  Parte 1: Define tu estructura 
+
+  Parte 1: Define tu estructura
 
   Parte 2: Implementa la funcion mult_condicional()
 
@@ -255,7 +271,6 @@ void examen04()
 */
 /* ------------------- RESPUESTA   ------------------ */
 // Declara tu función aquí
-
 
 int examen05()
 {
@@ -265,7 +280,7 @@ int examen05()
 /* ------------------- RESPUESTA   ------------------ */
 
 /* ################      EJERCICIO 06 :    ################################
-   ################         20 pts         ################################ 
+   ################         20 pts         ################################
 Dentro de la funcion foo() Interpreta args como un arreglo de punteros
 En donde cada posicion de ese arreglo indica un tipo de dato especifico.
   - El arreglo se llena automaticamente en la funcion ejercicio06
@@ -273,11 +288,11 @@ En donde cada posicion de ese arreglo indica un tipo de dato especifico.
   - Cada espacio de MyData indica algo diferente
 
 El objetivo es:
-  - Aplicar la operacion para "duplicar un numero" sobre el arreglo en 
+  - Aplicar la operacion para "duplicar un numero" sobre el arreglo en
    la posicion DATA, guardar los resultados en el arreglo representado
     por DOUBLE_RES
-  - Aplicar la operacion para "triplicar un numero" sobre el arreglo en 
-   la posicion NUM_DATA, guardar los resultados en el arreglo 
+  - Aplicar la operacion para "triplicar un numero" sobre el arreglo en
+   la posicion NUM_DATA, guardar los resultados en el arreglo
    representado por TRIPLE_RES
 
   Ojo, las funciones "duplicar" y "triplicar" son las mismas del EJERCICIO04
@@ -305,10 +320,10 @@ El objetivo es:
 #define DOUBLE_RES 3
 #define TRIPLE_RES 4
 
-void * foo(void *args)
+void *foo(void *args)
 {
   /* ------------------- RESPUESTA   ------------------ */
-  
+
   /* ------------------- RESPUESTA   ------------------ */
   /* Aqui va la solucion del Ejercicio 06 */
   return NULL;
@@ -318,9 +333,9 @@ void * foo(void *args)
 void InitArray(int *arr, int len)
 {
   int *parr = arr;
-  for (int i=0;i<len; i++, parr++)
+  for (int i = 0; i < len; i++, parr++)
   {
-    *parr = 5+i;
+    *parr = 5 + i;
   }
 }
 
@@ -328,17 +343,18 @@ void PrintArray(int *arr, int len)
 {
   int i = 5;
   int *parr = arr;
-  for (i=0;i<len; i++, parr++)
+  for (i = 0; i < len; i++, parr++)
   {
     printf("  arr[%d] = %d\n", i, *parr);
   }
 }
 
-int examen06(void) {
+int examen06(void)
+{
 
   int numbers[MAXELEM];
   int doubles[MAXELEM], triples[MAXELEM];
-  void * MyData[5] = {};
+  void *MyData[5] = {};
   void **ptrToMyData = MyData;
 
   printf("==== init ====\n");
@@ -347,37 +363,36 @@ int examen06(void) {
 
   MyData[DOUBLE_OP] = duplica;
   MyData[TRIPLE_OP] = triplica;
-  MyData[DATA]   = numbers;
+  MyData[DATA] = numbers;
   MyData[DOUBLE_RES] = doubles;
   MyData[TRIPLE_RES] = triples;
-  
+
   foo((void *)ptrToMyData);
- 
+
   printf("==== Doubles Result ====\n");
   PrintArray(doubles, MAXELEM);
 
   printf("==== Triplets Result ====\n");
   PrintArray(triples, MAXELEM);
   return 0;
-}/* No tocar estas funciones */
-
+} /* No tocar estas funciones */
 
 int main()
 {
   char nombre[20] = "TUNOMBRE";
   printf("-Examen 01: \n\tPor: \t\t%s\n", nombre);
-  
+
   printf("--------------------ex01 ------------------------\n");
   examen01();
   printf("--------------------ex02 ------------------------\n");
   examen02();
-  //ejercicio 3 no imprime nada en pantalla.  
-  printf("--------------------ex04 ------------------------\n");        
+  // ejercicio 3 no imprime nada en pantalla.
+  printf("--------------------ex04 ------------------------\n");
   examen04();
   printf("--------------------ex05 ------------------------\n");
   examen05();
   printf("--------------------ex06 ------------------------\n");
   examen06();
-  
+
   return 0;
 }
