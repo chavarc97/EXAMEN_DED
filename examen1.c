@@ -70,6 +70,12 @@ Pruebe que su programa funcione con los ejemplos programados
 /*------------------- INICIO RESPUESTA   ------------------ */
 char *desencriptar(char *palabra)
 {
+  /* 
+    Para recorrer la cadena de texto, utilizamos un apuntador que se incrementa en cada iteración.
+    Comprobamos si la posición de la letra es par o non y aplicamos la lógica de desencriptación
+    correspondiente. al igual para checar la longitud de la cadena nos fijamos que el ultimo caracter
+    sea el caracter nulo '\0'.
+   */
   char *p = palabra;
   
   for (int i = 0; *p != '\0'; i++, p++)
@@ -125,8 +131,12 @@ int examen01()
 
 /* ------------------- INICIO RESPUESTA   ------------------ */
 // Para la función.
-void covertir_temp(float *temperatura, char *tipo)
+void convertir_temp(float *temperatura, char *tipo)
 {
+  /* 
+    Le estamos pasando la dirección de memoria de la variable temperatura y tipo
+    para que la función pueda modificar directamente el valor de estas variables.
+   */
   if (*tipo == 'C')
   {
     *temperatura = (*temperatura * 9 / 5) + 32;
@@ -138,6 +148,20 @@ void covertir_temp(float *temperatura, char *tipo)
     *tipo = 'C';
   }
 }
+void convert_multiple_temps(float *temps, char *tipos, int num_temps)
+{
+  /* 
+  recorrecmos el arreglo de temperaturas y tipos que nos pasan como argumento
+  y llamamos a la función convertir_temp para cada temperatura.
+   */
+  float *p_temps = temps;
+  char *p_tipos = tipos;
+  for(int i = 0; i < num_temps; i++, p_temps++, p_tipos++)
+  {
+    convertir_temp(p_temps, p_tipos);
+  }
+}
+
 /* ------------------- FIN DE RESPUESTA   ------------------ */
 
 int examen02()
@@ -148,7 +172,7 @@ int examen02()
   printf("Temperatura actual es de: %.2f °%c\n", grados, tipo);
 
   /* ------------------- INICIO RESPUESTA   ------------------ */
-  covertir_temp(&grados, &tipo);
+  convertir_temp(&grados, &tipo);
   /* ------------------- FIN DE RESPUESTA   ------------------ */
 
   printf("Que equivale a: %.2f °%c\n", grados, tipo);
@@ -159,7 +183,7 @@ int examen02()
   printf("Temperatura actual es de: %.2f °%c\n", grados, tipo);
 
   /* ------------------- INICIO RESPUESTA   ------------------ */
-  // covertir_temp(?,?);
+  convertir_temp(&grados, &tipo);
   /* ------------------- FIN DE RESPUESTA   ------------------ */
 
   printf("Que equivale a: %.2f °%c\n", grados, tipo);
@@ -171,14 +195,15 @@ int examen02()
     Mi dinero convertido es: 69.8 °F
  */
 
-  /* Por 10 puntos extras: Crea una función llamada covertir_multiple_temps
+  /* Por 10 puntos extras: Crea una función llamada convertir_multiple_temps
   que pueda recibir un arreglo de temperaturas y haga funcionar el siguiente
   codigo :  (NOTA, no usar [] en la función) */
   char tipos[4] = {'C', 'F', 'C', 'F'};
   float temps[4] = {45, 110, 0, 0};
   int num_temps = 4;
 
-  // convert_multiple_temps();  DESCOMENTA Y TERMINA ....
+  convert_multiple_temps(temps, tipos, num_temps);  //DESCOMENTA Y TERMINA ....
+  
 
   for (int i = 0; i < num_temps; i++)
   {
